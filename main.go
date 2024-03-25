@@ -7,20 +7,11 @@ import (
 	"net/http"
 	"os"
 	"slices"
+	"todo/config"
 	"todo/routes"
 	"todo/seeder"
+	"todo/ui"
 )
-
-const (
-	ColorYellow = "\u001b[33m"
-	ColorReset  = "\u001b[0m"
-	ColorGreen  = "\u001b[32m"
-)
-
-const version = "0.0.1"
-const release_date = "2024-03-25 11:30:00"
-
-type Color string
 
 type Command struct {
 	Name string
@@ -95,23 +86,19 @@ func serve() {
 }
 
 func usage() {
-	colorize(ColorGreen, os.Args[0])
+	ui.Colorize(ui.ColorGreen, os.Args[0])
 	fmt.Print(" version ")
-	colorize(ColorYellow, version)
-	fmt.Printf(" %s\n\n", release_date)
-	colorize(ColorYellow, "Usage:\n")
+	ui.Colorize(ui.ColorYellow, config.ReleaseVersion)
+	fmt.Printf(" %s\n\n", config.ReleaseDate)
+	ui.Colorize(ui.ColorYellow, "Usage:\n")
 	fmt.Print("    command [options] [arguments]\n\n")
-	colorize(ColorYellow, "Options:\n")
-	colorize(ColorGreen, "    -h, --help                    ")
+	ui.Colorize(ui.ColorYellow, "Options:\n")
+	ui.Colorize(ui.ColorGreen, "    -h, --help                    ")
 	fmt.Print("Display help for the given command. When no command is given display help for the list command\n")
 	fmt.Print("\n")
-	colorize(ColorYellow, "Available Commands:\n")
-	colorize(ColorGreen, "    seed    ")
+	ui.Colorize(ui.ColorYellow, "Available Commands:\n")
+	ui.Colorize(ui.ColorGreen, "    seed    ")
 	fmt.Print("Seed the database with some data\n")
-	colorize(ColorGreen, "    serve   ")
+	ui.Colorize(ui.ColorGreen, "    serve   ")
 	fmt.Print("Start the server\n")
-}
-
-func colorize(color Color, message string) {
-	fmt.Print(string(color), message, string(ColorReset))
 }

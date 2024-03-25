@@ -2,9 +2,11 @@ package seeder
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"todo/core"
 	db "todo/db/sqlc"
+	"todo/ui"
 )
 
 func Seed(usersOnly bool) {
@@ -25,9 +27,10 @@ func Seed(usersOnly bool) {
 }
 
 func Usage() {
-	log.Println("Usage: seed [options]")
-	log.Println("Options:")
-	log.Println("  -users-only    Seed only users")
+	ui.Colorize(ui.ColorYellow, "Description:\n")
+	fmt.Printf("    Seed the database with some data\n\n")
+	ui.Colorize(ui.ColorYellow, "Usage:\n")
+	fmt.Print("    -users-only    Seed only the users table\n\n")
 }
 
 func SeedAll(queries *db.Queries, ctx context.Context) {
