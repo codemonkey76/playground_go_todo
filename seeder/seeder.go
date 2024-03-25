@@ -4,18 +4,19 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"todo/core"
-	db "todo/db/sqlc"
+	"todo/database"
+	"todo/db/sqlc"
 	"todo/ui"
 )
 
 func Seed(usersOnly bool) {
 	log.Println("Seeding the database")
 
-	pg := core.ConnectDb()
+	pg := database.GetDB()
 	defer pg.Close()
+
 	ctx := context.Background()
-	queries := db.New(pg)
+	queries := sqlc.New(pg)
 
 	if usersOnly {
 		SeedUsers(queries, ctx)
@@ -33,7 +34,8 @@ func Usage() {
 	fmt.Print("    -users-only    Seed only the users table\n\n")
 }
 
-func SeedAll(queries *db.Queries, ctx context.Context) {
+func SeedAll(queries *sqlc.Queries, ctx context.Context) {
 	log.Println("Seeding All Models")
 	SeedUsers(queries, ctx)
+	SeedTasks(queries, ctx)
 }

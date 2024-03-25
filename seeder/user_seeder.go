@@ -5,23 +5,24 @@ import (
 	"database/sql"
 	"log"
 	"todo/auth"
-	db "todo/db/sqlc"
+	"todo/db/sqlc"
 )
 
-func SeedUsers(queries *db.Queries, ctx context.Context) {
+func SeedUsers(queries *sqlc.Queries, ctx context.Context) {
 	log.Println("Seeding Users")
 	addUser(queries, ctx, "Shane Poppleton", "shane@bjja.com.au", "password")
+	log.Println("Finished Seeding Users")
 }
 
-func addUser(queries *db.Queries, ctx context.Context, name string, email string, password string) {
+func addUser(queries *sqlc.Queries, ctx context.Context, name string, email string, password string) {
 	hashedPassword, err := auth.HashPassword(password)
 
 	if err != nil {
-		log.Fatalf("Error hashing password: %v", err)
+		log.Printf("Error hashing password: %v", err)
 		return
 	}
 
-	user, err := queries.CreateUser(ctx, db.CreateUserParams{
+	user, err := queries.CreateUser(ctx, sqlc.CreateUserParams{
 		Name:          name,
 		Email:         email,
 		Password:      hashedPassword,
@@ -29,7 +30,7 @@ func addUser(queries *db.Queries, ctx context.Context, name string, email string
 	})
 
 	if err != nil {
-		log.Fatalf("Error creating user: %v", err)
+		log.Printf("Error creating user: %v", err)
 		return
 	}
 	log.Println("User Created: ", user)

@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.25.0
 
-package db
+package sqlc
 
 import (
 	"database/sql"
@@ -49,10 +49,10 @@ type Step struct {
 
 type Task struct {
 	ID         int32         `json:"id"`
-	OwnerID    int64         `json:"owner_id"`
-	AssigneeID sql.NullInt64 `json:"assignee_id"`
 	Name       string        `json:"name"`
 	Completed  bool          `json:"completed"`
+	OwnerID    int64         `json:"owner_id"`
+	AssigneeID sql.NullInt64 `json:"assignee_id"`
 	CreatedAt  sql.NullTime  `json:"created_at"`
 	UpdatedAt  sql.NullTime  `json:"updated_at"`
 }

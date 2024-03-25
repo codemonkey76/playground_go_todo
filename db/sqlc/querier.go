@@ -2,18 +2,23 @@
 // versions:
 //   sqlc v1.25.0
 
-package db
+package sqlc
 
 import (
 	"context"
 )
 
 type Querier interface {
+	CreateTask(ctx context.Context, arg CreateTaskParams) (Task, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (CreateUserRow, error)
+	DeleteTask(ctx context.Context, id int32) (Task, error)
 	DeleteUser(ctx context.Context, id int32) (DeleteUserRow, error)
+	GetTaskById(ctx context.Context, id int32) (Task, error)
 	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
 	GetUserById(ctx context.Context, id int32) (GetUserByIdRow, error)
+	ListTasks(ctx context.Context, arg ListTasksParams) ([]Task, error)
 	ListUsers(ctx context.Context, arg ListUsersParams) ([]ListUsersRow, error)
+	UpdateTask(ctx context.Context, arg UpdateTaskParams) (Task, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (UpdateUserRow, error)
 }
 

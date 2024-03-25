@@ -1,9 +1,10 @@
 CREATE TABLE IF NOT EXISTS "tasks" (
   "id" SERIAL PRIMARY KEY NOT NULL,
-  "owner_id" BIGINT NOT NULL,
-  "assignee_id" BIGINT,
   "name" VARCHAR NOT NULL,
   "completed" BOOLEAN NOT NULL DEFAULT false,
+
+  "owner_id" BIGINT NOT NULL,
+  "assignee_id" BIGINT,
 
     -- Timestamps
   "created_at" TIMESTAMP DEFAULT (now()),
