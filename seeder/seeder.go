@@ -7,7 +7,7 @@ import (
 	db "todo/db/sqlc"
 )
 
-func Seed(args []string) {
+func Seed(usersOnly bool) {
 	log.Println("Seeding the database")
 
 	pg := core.ConnectDb()
@@ -15,19 +15,19 @@ func Seed(args []string) {
 	ctx := context.Background()
 	queries := db.New(pg)
 
-	if len(args) < 1 {
-		SeedAll(queries, ctx)
-		return
-	}
-
-	switch args[0] {
-	case "users":
+	if usersOnly {
 		SeedUsers(queries, ctx)
-	case "all":
+	} else {
 		SeedAll(queries, ctx)
 	}
 
 	log.Println("Finished Seeding")
+}
+
+func Usage() {
+	log.Println("Usage: seed [options]")
+	log.Println("Options:")
+	log.Println("  -users-only    Seed only users")
 }
 
 func SeedAll(queries *db.Queries, ctx context.Context) {
